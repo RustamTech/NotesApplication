@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  mongodb:
+    image: mongo:6.0
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+  notes-app:
+    build: .
+    ports:
+      - "8090:8080"
+    depends_on:
+      - mongodb
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/notesdb
+volumes:
+  mongo-data:
